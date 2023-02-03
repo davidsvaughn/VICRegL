@@ -1,0 +1,60 @@
+{
+    "dump": "cfg_convnext.json",
+    "load": null,
+    "exp_dir": "/media/david/Elements/imagenet/VICRegL/exp",
+    "log_tensors_interval": 60,
+    "checkpoint_freq": 1,
+    "dataset": "imagenet1k",
+    "dataset_from_numpy": false,
+    "size_crops": [
+        224,
+        96
+    ],
+    "num_crops": [
+        2,
+        6
+    ],
+    "min_scale_crops": [
+        0.4,
+        0.08
+    ],
+    "max_scale_crops": [
+        1,
+        0.4
+    ],
+    "no_flip_grid": 1,
+    "arch": "convnext_small",
+    "drop_path_rate": 0.1,
+    "layer_scale_init_value": 0.0,
+    "mlp": "8192-8192-8192",
+    "maps_mlp": "512-512-512",
+    "alpha": 0.75,
+    "num_matches": [
+        20,
+        4
+    ],
+    "l2_all_matches": 1,
+    "inv_coeff": 25.0,
+    "var_coeff": 25.0,
+    "cov_coeff": 1.0,
+    "fast_vc_reg": 0,
+    "epochs": 10,
+    "warmup_epochs": 10,
+    // "batch_size": 384,
+    "batch_size": 16,
+    "optimizer": "adamw",
+    "base_lr": 0.00075,
+    "end_lr_ratio": 0.001,
+    "weight_decay": 0.05,
+    "val_batch_size": -1,
+    "evaluate": false,
+    "evaluate_only": false,
+    "eval_freq": 10,
+    "maps_lr_ratio": 0.1,
+    "fp16": true,
+    "num_workers": 10,
+    "device": "cuda",
+    "world_size": 1,
+    "local_rank": -1,
+    "dist_url": "env://"
+}

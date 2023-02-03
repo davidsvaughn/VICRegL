@@ -1,0 +1,47 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Torchrun: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/david/code/davidsvaughn/VICRegL/venv/bin/torchrun",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "${file}",
+                // "--load", "cfg_resnet.json",
+                "--load", "cfg_convnext.json",
+            ]
+        }
+
+        /////////////////////////////////////////
+        // {
+        //     "name": "Python: Current File",
+        //     "type": "python",
+        //     "request": "launch",
+        //     "program": "${file}",
+        //     "console": "integratedTerminal",
+        //     "justMyCode": true,
+        //     "args": [
+        //         "--exp-dir", "/media/david/Elements/imagenet/VICRegL/exp",
+        //         "--fp16",
+        //         "--arch", "resnet50",
+        //         "--epochs", "10",
+        //         "--batch-size", "16",
+        //         "--optimizer", "lars",
+        //         "--base-lr", "0.3",
+        //         "--weight-decay", "1e-06",
+        //         "--size-crops", "224",
+        //         "--num-crops", "2",
+        //         "--min_scale_crops", "0.08",
+        //         "--max_scale_crops", "1.0",
+        //         "--alpha", "0.75",
+        //     ]
+        // }
+    ]
+}

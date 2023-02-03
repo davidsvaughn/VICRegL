@@ -18,7 +18,7 @@ from transforms import MultiCropTrainDataTransform, MultiCropValDataTransform
 
 
 IMAGENET_NUMPY_PATH = "/private/home/abardes/datasets/imagenet1k/"
-IMAGENET_PATH = "/datasets01/imagenet_full_size/061417"
+IMAGENET_PATH = "/media/david/Elements/imagenet/ILSVRC/Data/CLS-LOC"
 
 
 class ImageNetNumpyDataset(Dataset):
@@ -84,6 +84,7 @@ def build_dataset(args, is_train=True):
         else:
             root = IMAGENET_PATH
             prefix = "train" if is_train else "val"
+            # prefix = "train" if is_train else "test"
             path = os.path.join(root, "train")
             dataset = datasets.ImageFolder(path, transform)
 

@@ -29,8 +29,12 @@ import utils
 def get_arguments():
     parser = argparse.ArgumentParser(description="Pretraining with VICRegL", add_help=False)
 
+    parser.add_argument("--dump", type=str)
+    parser.add_argument("--load", type=str)
+
     # Checkpoints and Logs
-    parser.add_argument("--exp-dir", type=Path, required=True)
+    # parser.add_argument("--exp-dir", type=Path, required=True)
+    parser.add_argument("--exp-dir", type=str)
     parser.add_argument("--log-tensors-interval", type=int, default=60)
     parser.add_argument("--checkpoint-freq", type=int, default=1)
 
@@ -93,9 +97,7 @@ def get_arguments():
     parser.add_argument('--local_rank', default=-1, type=int)
     parser.add_argument('--dist-url', default='env://',
                         help='url used to set up distributed training')
-
     return parser
-
 
 def main(args):
     torch.backends.cudnn.benchmark = True
@@ -317,7 +319,7 @@ class VICRegL(nn.Module):
         var_loss = 0.0
         cov_loss = 0.0
 
-        # L2 distance based bacthing
+        # L2 distance based batching
         if self.args.l2_all_matches:
             num_matches_on_l2 = [None, None]
         else:
@@ -627,8 +629,34 @@ def neirest_neighbores_on_location(
 def exclude_bias_and_norm(p):
     return p.ndim == 1
 
+def read_lines(fn, skip_tok='//'):
+    with open(fn, 'r') as f:
+        lines = [n.strip() for n in f.readlines()]
+    return [line for line in lines if len(line)>0 and not line.startswith(skip_tok)]
+
+class AttrDict(dict):
+    def __init__(self, *args, **kwargs):
+        super(AttrDict, self).__init__(*args, **kwargs)
+        self.__dict__ = self
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Pretraining with VICRegL", parents=[get_arguments()])
     args = parser.parse_args()
+    #################################
+    root = os.path.dirname(os.path.realpath(__file__))
+    #### dump args ####
+    if args.dump is not None:
+        cfg_file = os.path.join(root, args.dump)
+        with open(cfg_file, 'w') as fp:
+            json.dump(args.__dict__, fp, indent=4)
+        sys.exit()
+    ###################
+    #### load args ####
+    if args.load is not None:
+        cfg_file = os.path.join(root, args.load)
+        args = json.loads(' '.join(read_lines(cfg_file)))
+        args = AttrDict(args)
+        # print(args)
+    #################################
+    args.exp_dir = Path(args.exp_dir)
     main(args)
